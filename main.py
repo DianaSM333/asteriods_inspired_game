@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 from asteroid import Asteroid
@@ -34,10 +36,15 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        updatable.update(dt)
+        updatable.update(dt)    # updates position before it is rendered
 
+        #checks for collision between player and asteroids
+        for a in asteroids:
+            if a.collision_check(player):
+                sys.exit("Game Over")
         screen.fill((0, 0, 0))
 
+        # draws all the sprites
         for thing in drawable:
             thing.draw(screen)
 
