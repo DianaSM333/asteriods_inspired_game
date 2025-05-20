@@ -2,6 +2,7 @@ import pygame
 # importing all the constants
 from constants import *
 from player import Player
+
 def main():
     pygame.init()   # initializing the game
     c = pygame.time.Clock()
@@ -20,6 +21,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        player.update(dt)
         screen.fill((0, 0, 0))
         player.draw(screen)
         pygame.display.flip() #update the contents of the entire display
