@@ -7,6 +7,8 @@ from asteroid import Asteroid
 from constants import *
 from player import Player
 from asteroidfield import AsteroidField
+from bullet import Shot
+
 def main():
     pygame.init()   # initializing the game
     c = pygame.time.Clock()
@@ -17,6 +19,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+
     Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)    # player has to be added after the group is created
 
@@ -25,6 +28,9 @@ def main():
 
     AsteroidField.containers = (updatable)
     field = AsteroidField()
+
+    shots = pygame.sprite.Group()
+    Shot.containers = (shots, updatable, drawable)
     '''
     Video games are generally built using a game loop, the simplest loop has 3 steps
     1.) Check for payer inputs
