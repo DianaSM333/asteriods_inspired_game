@@ -15,21 +15,21 @@ def main():
     dt = 0          # delta is used to represent the amount of time that has passed since the last frame was drawn
     print("Starting Asteroids!")
 
-
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)    # player has to be added after the group is created
 
-    asteroids = pygame.sprite.Group()
     Asteroid.containers = (asteroids, updatable, drawable)  # this ensures that every instance of the Asteroid class is automatically added to these groups upon creation
 
-    AsteroidField.containers = (updatable)
+    AsteroidField.containers = updatable
     field = AsteroidField()
 
-    shots = pygame.sprite.Group()
     Shot.containers = (shots, updatable, drawable)
     '''
     Video games are generally built using a game loop, the simplest loop has 3 steps
@@ -50,6 +50,12 @@ def main():
                 sys.exit("Game Over")
         screen.fill((0, 0, 0))
 
+        # checking for collision between asteroid and bullet
+        for a in asteroids:
+            for b in shots:
+                if a.collision_check(b):
+                    a.split()
+                    b.kill()
         # draws all the sprites
         for thing in drawable:
             thing.draw(screen)
